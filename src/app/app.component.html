@@ -1,0 +1,47 @@
+<div class="container" style="height: 100vh;">
+  <div class="row h-100 mt-5">
+    <div class="col-8">
+      <div class="card h40 mb-2">
+        <form  #f="ngForm" class="w-50 mx-auto pt-4">
+          <div class="form-group">
+            <label>Placa del Carro</label>
+            <input placeholder="Placa del Carro" maxlength="6" ngModel name="placa" type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Hora de entrada</label>
+            <input placeholder="Hora de entrada" maxlength="2" ngModel name="horas" type="number" class="form-control">
+          </div>
+          <button type="reset" (click)="guardaCarro( f.value )" class="btn btn-primary btn-block" >Guardar Carro</button>
+        </form>
+      </div>
+
+      <div class="card " *ngIf="carrosSacados.length != 0">
+        <div class="row">
+          <div class="col-6 pt-3">
+              <h1>Total: {{ total }} </h1>
+          </div>
+          <div class="col-6 overflow-auto h40-2 bg-secondary">
+            <div class="card m-3" *ngFor="let carro of carrosSacados">
+              <p> Placa: {{ carro.carro.placa }}</p>
+              <p> Total: {{ carro.totalCobrado }}</p>
+              <p> Horas: {{ carro.totalHoras }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="card h80 bg-warning overflow-auto">
+        <div class="card m-3" *ngFor="let carro of carros">
+          <h3>Placa:  {{ carro.placa }} </h3>
+          <p> Horas: {{ carro.horaEntrada }} </p>
+
+          <button *ngIf="!carro.editar" class="btn btn-primary" (click)="prepararSacarCarro(carro)">Sacar</button>
+          
+          <input  *ngIf="carro.editar" type="number" class="form-control" placeholder="Hora salida" [(ngModel)]="horaSalida">
+          <button *ngIf="carro.editar" class="btn btn-success"  (click)="sacarCarro(carro)">Aceptar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
